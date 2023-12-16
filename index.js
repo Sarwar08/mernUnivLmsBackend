@@ -20,7 +20,6 @@ app.get('/', (request, response)=>{
     return response.status(302).send("Welcome to tut");
 });
 
-
 mongoose
     .connect(mongoDBURL)
     .then(()=>{

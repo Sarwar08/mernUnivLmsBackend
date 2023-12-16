@@ -13,6 +13,18 @@ const bookSchema = mongoose.Schema(
         publishYear:{
             type: Number,
             required: true
+        }, 
+        quantity:{
+            type: Number,
+            required: true,
+        },
+        available:{
+            type: Number,
+            required: true,
+        },
+        borrowed:{
+            type: Number,
+            default: 0, // initializes with 0, updates later
         }
     },
     {
@@ -20,4 +32,5 @@ const bookSchema = mongoose.Schema(
     }
 );
 
-export const Book = mongoose.model('Books', bookSchema);
+export const Book = mongoose.model('books', bookSchema);
+

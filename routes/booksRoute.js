@@ -9,16 +9,21 @@ router.post('/', async (request, response) => {
         if(
             !request.body.title||
             !request.body.author||
-            !request.body.publishYear
+            !request.body.publishYear||
+            !request.body.quantity||
+            !request.body.available
+            
         ){
             return response.status(400).send({
-                message: "Send all required fields: title, author, publishYear",
+                message: "Send all required fields: title, author, publish Year, quantity, available"
             });
         }
         const newBook = {
            title: request.body.title,
            author: request.body.author,
            publishYear: request.body.publishYear,
+           quantity: request.body.quantity,
+           available: request.body.available,
         };
         
         const book = await Book.create(newBook);
@@ -65,10 +70,11 @@ router.put('/:id', async(request, response)=>{
         if (
             !request.body.title || 
             !request.body.author || 
-            !request.body.publishYear
+            !request.body.publishYear||
+            !request.body.quantity
         ){
             return response.status(400).send({message: 
-                'Send all required fields: title, author, publishYear'})
+                'Send all required fields: title, author, publishYear,quantity'})
         }
         
         const {id} = request.params;
@@ -101,5 +107,32 @@ router.delete('/:id', async (request, response)=>{
         return response.status(500).send({message: error.message});
     }
 });
+
+// Route for BorrowAndReturn a book
+router.put('/:id', async(request, response)=>{
+    try{
+        if (
+            !request.body.title || 
+            !request.body.author || 
+            !request.body.publishYear||
+            !request.body.quantity
+        ){
+            return response.status(400).send({message: 
+                'Send all required fields: title, author, publishYear,quantity'})
+        }
+        
+        const {id} = request.params;
+        const result = await Book.findByIdAndUpdate(id, request.body);
+
+        if (!result){
+            return response.status(404).json({message: 'Book not found'});
+        }
+        return response.status(200).send({message: 'Book Updated Successfully'});
+
+    }catch(error){
+        console.log(error.message);
+        response.status(500).send({message: error.message})
+    }
+})
 
 export default router;
