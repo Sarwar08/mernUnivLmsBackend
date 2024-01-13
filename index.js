@@ -14,12 +14,13 @@ app.use(express.json());
 // middleware for handling CORS policy
 app.use(cors());
 
-
+// Handling root route
 app.get('/', (request, response)=>{
     console.log(request);
-    return response.status(302).send("Welcome to tut");
+    return response.status(302).send("Welcome to Library Management System");
 });
 
+// Connecting to Database MongoDB
 mongoose
     .connect(mongoDBURL)
     .then(()=>{
@@ -32,4 +33,5 @@ mongoose
         console.log(error);
     })
 
+// booksRoute as middleware
 app.use('/books', booksRoute);
