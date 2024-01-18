@@ -59,7 +59,7 @@ router.get('/:id', async (request, response)=>{
         return response.status(200).json(book);
         
     } catch (error) {
-        conslole.log(error.message);
+        console.log(error.message);
         return response.status(500).send({message: error.message});
     }
 })
